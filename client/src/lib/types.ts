@@ -67,6 +67,7 @@ export interface Comment {
 
 export interface HangmanGame {
   id: string;
+  word?: string;
   hint: string | null;
   language: string;
   state: GameState;
