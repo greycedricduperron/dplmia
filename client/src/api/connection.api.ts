@@ -1,5 +1,5 @@
 import api from './client';
-import type { ClassConnection } from '@dplmia/shared';
+import type { ClassConnection } from '../lib/types';
 
 type R<T> = { success: true; data: T };
 

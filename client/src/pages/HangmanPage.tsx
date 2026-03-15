@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import type { HangmanGame, ClassConnection } from '@dplmia/shared';
+import type { HangmanGame, ClassConnection } from '../lib/types';
 import { hangmanApi } from '../api/hangman.api';
 import { connectionApi } from '../api/connection.api';
 import { useAuth } from '../context/AuthContext';

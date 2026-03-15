@@ -1,5 +1,5 @@
 import api from './client';
-import type { Post, Comment } from '@dplmia/shared';
+import type { Post, Comment } from '../lib/types';
 
 type R<T> = { success: true; data: T };
 

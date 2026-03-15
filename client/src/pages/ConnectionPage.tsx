@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import type { ClassConnection } from '@dplmia/shared';
+import type { ClassConnection } from '../lib/types';
 import { connectionApi } from '../api/connection.api';
 
 export default function ConnectionPage() {

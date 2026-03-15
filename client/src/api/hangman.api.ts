@@ -1,5 +1,5 @@
 import api from './client';
-import type { HangmanGame } from '@dplmia/shared';
+import type { HangmanGame } from '../lib/types';
 
 type R<T> = { success: true; data: T };
 

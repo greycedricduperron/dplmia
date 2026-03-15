@@ -1,5 +1,5 @@
 import api from './client';
-import type { Teacher } from '@dplmia/shared';
+import type { Teacher } from '../lib/types';
 
 export const authApi = {
   register: (data: { name: string; email: string; password: string; country: string; language: string }) =>

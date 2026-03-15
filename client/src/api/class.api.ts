@@ -1,5 +1,5 @@
 import api from './client';
-import type { Class } from '@dplmia/shared';
+import type { Class } from '../lib/types';
 
 export const classApi = {
   create: (data: { name: string; country: string; language: string }) =>

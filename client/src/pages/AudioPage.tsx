@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import type { Post } from '@dplmia/shared';
+import type { Post } from '../lib/types';
 import { feedApi } from '../api/feed.api';
 import AudioPlayer from '../components/common/AudioPlayer';
 

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import type { Class } from '@dplmia/shared';
+import type { Class } from '../lib/types';
 import { classApi } from '../api/class.api';
 
 export default function ClassPage() {

@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import type { Teacher } from '@dplmia/shared';
+import type { Teacher } from '../lib/types';
 import { authApi } from '../api/auth.api';
 import i18n from '../i18n';
 
