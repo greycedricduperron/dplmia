@@ -1,0 +1,103 @@
+{
+  "app": { "name": "DiplomIA" },
+  "nav": {
+    "feed": "Actualités",
+    "gallery": "Galerie",
+    "audio": "Sons",
+    "hangman": "Pendu",
+    "connections": "Connexions",
+    "myClass": "Ma classe",
+    "logout": "Déconnexion"
+  },
+  "auth": {
+    "login": "Connexion",
+    "register": "Inscription",
+    "email": "Email",
+    "password": "Mot de passe",
+    "name": "Nom complet",
+    "country": "Pays (code ISO, ex: FR)",
+    "language": "Langue préférée",
+    "loginBtn": "Se connecter",
+    "registerBtn": "S'inscrire",
+    "noAccount": "Pas encore de compte ?",
+    "hasAccount": "Déjà un compte ?"
+  },
+  "class": {
+    "create": "Créer ma classe",
+    "name": "Nom de la classe",
+    "country": "Pays",
+    "language": "Langue",
+    "createBtn": "Créer",
+    "noClass": "Vous n'avez pas encore de classe.",
+    "invite": "Inviter une classe",
+    "targetName": "Nom de la classe cible",
+    "targetCountry": "Pays de la classe cible",
+    "sendInvite": "Envoyer l'invitation"
+  },
+  "feed": {
+    "title": "Fil d'actualités",
+    "newPost": "Nouvelle actualité",
+    "postTitle": "Titre",
+    "postContent": "Contenu (optionnel)",
+    "publish": "Publier",
+    "comment": "Commenter",
+    "addComment": "Ajouter un commentaire",
+    "send": "Envoyer",
+    "deletePost": "Supprimer",
+    "noFeed": "Aucune actualité pour l'instant. Connectez-vous à une autre classe pour commencer !",
+    "image": "Image",
+    "audio": "Son",
+    "text": "Texte",
+    "chooseFile": "Choisir un fichier"
+  },
+  "gallery": {
+    "title": "Galerie d'images",
+    "empty": "Aucune image partagée pour l'instant."
+  },
+  "audio": {
+    "title": "Sons partagés",
+    "empty": "Aucun son partagé pour l'instant."
+  },
+  "connections": {
+    "title": "Connexions",
+    "status": {
+      "PENDING": "En attente",
+      "ACCEPTED": "Acceptée",
+      "REJECTED": "Refusée"
+    },
+    "accept": "Accepter",
+    "reject": "Refuser",
+    "disconnect": "Déconnecter",
+    "pending": "Invitations reçues",
+    "empty": "Aucune connexion."
+  },
+  "hangman": {
+    "title": "Jeu du Pendu",
+    "propose": "Proposer un mot",
+    "word": "Mot à deviner",
+    "hint": "Indice (optionnel)",
+    "language": "Langue du mot",
+    "proposeBtn": "Proposer",
+    "guess": "Deviner une lettre",
+    "guessedLetters": "Lettres proposées",
+    "wrong": "Erreurs",
+    "won": "Gagné ! Le mot était",
+    "lost": "Perdu ! Le mot était",
+    "active": "Partie en cours",
+    "finished": "Partie terminée",
+    "youProposed": "Vous avez proposé ce mot",
+    "abandon": "Abandonner la partie",
+    "noGames": "Aucune partie. Proposez un mot pour commencer !",
+    "activeGame": "Une partie est déjà en cours."
+  },
+  "common": {
+    "loading": "Chargement…",
+    "error": "Une erreur est survenue.",
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "delete": "Supprimer",
+    "confirm": "Confirmer",
+    "by": "par",
+    "at": "le"
+  }
+}

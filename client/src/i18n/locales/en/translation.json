@@ -1,0 +1,103 @@
+{
+  "app": { "name": "DiplomIA" },
+  "nav": {
+    "feed": "News Feed",
+    "gallery": "Gallery",
+    "audio": "Audio",
+    "hangman": "Hangman",
+    "connections": "Connections",
+    "myClass": "My Class",
+    "logout": "Log out"
+  },
+  "auth": {
+    "login": "Login",
+    "register": "Sign up",
+    "email": "Email",
+    "password": "Password",
+    "name": "Full name",
+    "country": "Country (ISO code, e.g. GB)",
+    "language": "Preferred language",
+    "loginBtn": "Log in",
+    "registerBtn": "Sign up",
+    "noAccount": "No account yet?",
+    "hasAccount": "Already have an account?"
+  },
+  "class": {
+    "create": "Create my class",
+    "name": "Class name",
+    "country": "Country",
+    "language": "Language",
+    "createBtn": "Create",
+    "noClass": "You don't have a class yet.",
+    "invite": "Invite a class",
+    "targetName": "Target class name",
+    "targetCountry": "Target class country",
+    "sendInvite": "Send invitation"
+  },
+  "feed": {
+    "title": "News Feed",
+    "newPost": "New post",
+    "postTitle": "Title",
+    "postContent": "Content (optional)",
+    "publish": "Publish",
+    "comment": "Comment",
+    "addComment": "Add a comment",
+    "send": "Send",
+    "deletePost": "Delete",
+    "noFeed": "No posts yet. Connect with another class to get started!",
+    "image": "Image",
+    "audio": "Audio",
+    "text": "Text",
+    "chooseFile": "Choose a file"
+  },
+  "gallery": {
+    "title": "Image Gallery",
+    "empty": "No images shared yet."
+  },
+  "audio": {
+    "title": "Shared Audio",
+    "empty": "No audio shared yet."
+  },
+  "connections": {
+    "title": "Connections",
+    "status": {
+      "PENDING": "Pending",
+      "ACCEPTED": "Accepted",
+      "REJECTED": "Rejected"
+    },
+    "accept": "Accept",
+    "reject": "Reject",
+    "disconnect": "Disconnect",
+    "pending": "Received invitations",
+    "empty": "No connections yet."
+  },
+  "hangman": {
+    "title": "Hangman Game",
+    "propose": "Propose a word",
+    "word": "Word to guess",
+    "hint": "Hint (optional)",
+    "language": "Word language",
+    "proposeBtn": "Propose",
+    "guess": "Guess a letter",
+    "guessedLetters": "Guessed letters",
+    "wrong": "Wrong guesses",
+    "won": "You won! The word was",
+    "lost": "You lost! The word was",
+    "active": "Game in progress",
+    "finished": "Game over",
+    "youProposed": "You proposed this word",
+    "abandon": "Abandon game",
+    "noGames": "No games yet. Propose a word to start!",
+    "activeGame": "A game is already in progress."
+  },
+  "common": {
+    "loading": "Loading…",
+    "error": "Something went wrong.",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "confirm": "Confirm",
+    "by": "by",
+    "at": "on"
+  }
+}
