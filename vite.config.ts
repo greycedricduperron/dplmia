@@ -10,7 +10,12 @@ export default defineConfig(({ mode }) => {
 
   return {
     plugins: [
-      tanstackStart({ srcDirectory: 'app' }),
+      tanstackStart({
+        srcDirectory: 'app',
+        server: {
+          preset: 'cloudflare-pages',
+        },
+      }),
       viteReact(),
     ],
   }
