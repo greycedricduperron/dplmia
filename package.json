@@ -1,16 +1,43 @@
 {
   "name": "dplmia",
   "private": true,
-  "workspaces": ["shared", "server", "client"],
+  "type": "module",
   "scripts": {
-    "dev": "npm run build --workspace=shared && concurrently \"npm run dev --workspace=server\" \"npm run dev --workspace=client\"",
-    "build": "npm run build --workspace=shared && npm run build --workspace=server && npm run build --workspace=client",
-    "build:pages": "npm run build --workspace=shared && npm run build --workspace=client",
-    "db:migrate": "npm run db:migrate --workspace=server",
-    "db:seed": "npm run db:seed --workspace=server",
-    "db:studio": "npm run db:studio --workspace=server"
+    "dev": "vite dev",
+    "build": "vite build",
+    "start": "node .output/server/index.mjs",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate",
+    "db:studio": "drizzle-kit studio",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "@cloudflare/vite-plugin": "^1.30.0",
+    "@neondatabase/serverless": "^0.9.0",
+    "@tanstack/react-router": "^1.121.2",
+    "@tanstack/react-start": "^1.121.2",
+    "bcryptjs": "^2.4.3",
+    "drizzle-orm": "^0.36.4",
+    "i18next": "^23.8.2",
+    "i18next-browser-languagedetector": "^7.2.1",
+    "jose": "^5.9.6",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-i18next": "^14.0.5",
+    "vite": "^8.0.1",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
-    "concurrently": "^8.2.2"
+    "@types/bcryptjs": "^2.4.6",
+    "@types/react": "^18.3.1",
+    "@types/react-dom": "^18.3.1",
+    "@vitejs/plugin-react": "^6.0.1",
+    "drizzle-kit": "^0.28.1",
+    "typescript": "^5.6.3",
+    "vinxi": "^0.5.1",
+    "vite-tsconfig-paths": "^5.1.4",
+    "vitest": "^2.1.8",
+    "wrangler": "^3.95.0"
   }
 }

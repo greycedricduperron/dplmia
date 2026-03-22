@@ -1,0 +1,6 @@
+# Copier ce fichier en .dev.vars et renseigner les valeurs
+# Ce fichier est utilisé par wrangler dev pour simuler les secrets Cloudflare
+
+DATABASE_URL=postgresql://user:password@host/dbname?sslmode=require
+JWT_SECRET=changez-moi-avec-au-moins-32-caracteres-aleatoires
+R2_PUBLIC_URL=https://votre-bucket.r2.dev

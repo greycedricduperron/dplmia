@@ -4,3 +4,7 @@ dist/
 uploads/
 *.tsbuildinfo
 .claude/
+.output/
+.wrangler/
+app/.dev.vars
+drizzle/meta/
