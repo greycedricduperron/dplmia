@@ -1,5 +1,6 @@
 import { defineConfig, loadEnv } from 'vite'
 import { tanstackStart } from '@tanstack/react-start/plugin/vite'
+import { cloudflare } from '@cloudflare/vite-plugin'
 import viteReact from '@vitejs/plugin-react'
 
 export default defineConfig(({ mode }) => {
@@ -10,12 +11,8 @@ export default defineConfig(({ mode }) => {
 
   return {
     plugins: [
-      tanstackStart({
-        srcDirectory: 'app',
-        server: {
-          preset: 'cloudflare-pages',
-        },
-      }),
+      cloudflare({ viteEnvironment: { name: 'ssr' } }),
+      tanstackStart({ srcDirectory: 'app' }),
       viteReact(),
     ],
   }
