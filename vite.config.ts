@@ -13,8 +13,5 @@ export default defineConfig(({ mode }) => {
       tanstackStart({ srcDirectory: 'app' }),
       viteReact(),
     ],
-    resolve: {
-      tsconfigPaths: true,
-    },
   }
 })
