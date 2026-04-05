@@ -20,7 +20,7 @@ export function getAuth() {
       provider: 'pg',
       schema: { user, session, account, verification },
     }),
-    secret: env.BETTER_AUTH_SECRET,
+    secret: env.BETTER_AUTH_API_KEY,
     baseURL: env.BETTER_AUTH_BASE_URL,
     basePath: '/api/auth',
     socialProviders: {

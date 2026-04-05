@@ -1,6 +1,6 @@
 export interface CloudflareEnv {
   DATABASE_URL: string
-  BETTER_AUTH_SECRET: string
+  BETTER_AUTH_API_KEY: string
   BETTER_AUTH_BASE_URL: string
   GOOGLE_CLIENT_ID: string
   GOOGLE_CLIENT_SECRET: string
@@ -18,7 +18,7 @@ export function setCloudflareEnv(env: CloudflareEnv): void {
   // Proxy with context-bound getters that stop working outside the fetch handler.
   ;(globalThis as Record<string, unknown>)['__cfEnv'] = {
     DATABASE_URL: env.DATABASE_URL,
-    BETTER_AUTH_SECRET: env.BETTER_AUTH_SECRET,
+    BETTER_AUTH_API_KEY: env.BETTER_AUTH_API_KEY,
     BETTER_AUTH_BASE_URL: env.BETTER_AUTH_BASE_URL,
     GOOGLE_CLIENT_ID: env.GOOGLE_CLIENT_ID,
     GOOGLE_CLIENT_SECRET: env.GOOGLE_CLIENT_SECRET,
@@ -41,7 +41,7 @@ export function getCloudflareEnv(): CloudflareEnv {
   // Local dev fallback: process.env is populated from app/.dev.vars via loadEnv
   return {
     DATABASE_URL: process.env['DATABASE_URL'] ?? '',
-    BETTER_AUTH_SECRET: process.env['BETTER_AUTH_SECRET'] ?? '',
+    BETTER_AUTH_API_KEY: process.env['BETTER_AUTH_API_KEY'] ?? '',
     BETTER_AUTH_BASE_URL: process.env['BETTER_AUTH_BASE_URL'] ?? 'http://localhost:5173',
     GOOGLE_CLIENT_ID: process.env['GOOGLE_CLIENT_ID'] ?? '',
     GOOGLE_CLIENT_SECRET: process.env['GOOGLE_CLIENT_SECRET'] ?? '',
