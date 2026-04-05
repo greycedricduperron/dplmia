@@ -2,6 +2,10 @@ import { defineConfig, loadEnv } from 'vite'
 import { tanstackStart } from '@tanstack/react-start/plugin/vite'
 import { cloudflare } from '@cloudflare/vite-plugin'
 import viteReact from '@vitejs/plugin-react'
+import { fileURLToPath } from 'url'
+import { dirname, resolve } from 'path'
+
+const __dirname = dirname(fileURLToPath(import.meta.url))
 
 export default defineConfig(({ mode }) => {
   // Load all .env vars (including non-VITE_ ones) and inject into process.env
@@ -19,5 +23,18 @@ export default defineConfig(({ mode }) => {
       tanstackStart({ srcDirectory: 'app' }),
       viteReact(),
     ],
+    resolve: {
+      alias: isProduction
+        ? {}
+        : {
+            // In dev, alias the Cloudflare runtime module to a local polyfill
+            // that reads from process.env (populated above from .dev.vars).
+            // In production, @cloudflare/vite-plugin resolves this natively.
+            'cloudflare:workers': resolve(
+              __dirname,
+              'app/server/cloudflare-workers-polyfill.ts',
+            ),
+          },
+    },
   }
 })
