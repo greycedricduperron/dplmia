@@ -10,7 +10,7 @@ import { setCloudflareEnv, type CloudflareEnv } from './server/env'
 // of module boundaries or code-splitting in the bundle.
 export default {
   async fetch(request: Request, env: CloudflareEnv, ctx: ExecutionContext) {
-    setCloudflareEnv(env)
+    if (env?.DATABASE_URL) setCloudflareEnv(env)
     return createStartHandler(defaultStreamHandler)(request, env, ctx)
   },
 }
