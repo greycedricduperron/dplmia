@@ -21,16 +21,22 @@ export const registerFn = createServerFn({ method: 'POST' })
     if (existing) throw new Error('EMAIL_TAKEN')
 
     const passwordHash = await hashPassword(data.password)
-    const [teacher] = await db
-      .insert(teachers)
-      .values({
-        name: data.name,
-        email: data.email,
-        passwordHash,
-        language: data.language,
-        country: data.country,
-      })
-      .returning()
+    let teacher: typeof teachers.$inferSelect
+    try {
+      ;[teacher] = await db
+        .insert(teachers)
+        .values({
+          name: data.name,
+          email: data.email,
+          passwordHash,
+          language: data.language,
+          country: data.country,
+        })
+        .returning()
+    } catch (e: unknown) {
+      const cause = (e as { cause?: { message?: string } })?.cause
+      throw new Error(`DB_ERROR: ${(e as Error).message} | cause: ${cause?.message ?? 'none'}`)
+    }
 
     const token = await signToken({ teacherId: teacher.id, classId: null }, env.JWT_SECRET)
     setAuthCookie(token, env.NODE_ENV === 'production')
