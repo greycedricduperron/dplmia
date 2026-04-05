@@ -9,9 +9,13 @@ export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '')
   Object.assign(process.env, env)
 
+  const isProduction = mode === 'production'
+
   return {
     plugins: [
-      cloudflare({ viteEnvironment: { name: 'ssr' } }),
+      // Cloudflare plugin requires workerd which doesn't run on Windows.
+      // Only load it for production builds.
+      isProduction && cloudflare({ viteEnvironment: { name: 'ssr' } }),
       tanstackStart({ srcDirectory: 'app' }),
       viteReact(),
     ],
