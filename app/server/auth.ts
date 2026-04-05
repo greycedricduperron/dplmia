@@ -1,22 +1,59 @@
-import { SignJWT, jwtVerify } from 'jose'
+import { betterAuth } from 'better-auth'
+import { drizzleAdapter } from 'better-auth/adapters/drizzle'
+import { getDb } from './db'
+import { getCloudflareEnv } from './env'
+import { user, session, account, verification, teacherProfiles } from './db/schema'
 
-export interface JwtPayload {
-  teacherId: string
-  classId: string | null
-}
+// Cached per Worker isolate — safe because setCloudflareEnv() is called first
+// in server.tsx before any server function runs.
+let _auth: ReturnType<typeof betterAuth> | null = null
+let _cachedDbUrl: string | null = null
 
-function secretKey(jwtSecret: string) {
-  return new TextEncoder().encode(jwtSecret)
-}
+export function getAuth() {
+  const env = getCloudflareEnv()
+  if (_auth && _cachedDbUrl === env.DATABASE_URL) return _auth
 
-export async function signToken(payload: JwtPayload, jwtSecret: string): Promise<string> {
-  return new SignJWT({ ...payload })
-    .setProtectedHeader({ alg: 'HS256' })
-    .setExpirationTime('7d')
-    .sign(secretKey(jwtSecret))
-}
+  const db = getDb(env.DATABASE_URL)
 
-export async function verifyToken(token: string, jwtSecret: string): Promise<JwtPayload> {
-  const { payload } = await jwtVerify(token, secretKey(jwtSecret))
-  return payload as unknown as JwtPayload
+  _auth = betterAuth({
+    database: drizzleAdapter(db, {
+      provider: 'pg',
+      schema: { user, session, account, verification },
+    }),
+    secret: env.BETTER_AUTH_SECRET,
+    baseURL: env.BETTER_AUTH_BASE_URL,
+    basePath: '/api/auth',
+    socialProviders: {
+      google: {
+        clientId: env.GOOGLE_CLIENT_ID,
+        clientSecret: env.GOOGLE_CLIENT_SECRET,
+      },
+      microsoft: {
+        clientId: env.MICROSOFT_CLIENT_ID,
+        clientSecret: env.MICROSOFT_CLIENT_SECRET,
+        tenantId: 'common',
+      },
+      slack: {
+        clientId: env.SLACK_CLIENT_ID,
+        clientSecret: env.SLACK_CLIENT_SECRET,
+      },
+    },
+    databaseHooks: {
+      user: {
+        create: {
+          after: async (newUser) => {
+            // Create an empty teacher profile for every new OAuth user
+            const freshDb = getDb(getCloudflareEnv().DATABASE_URL)
+            await freshDb
+              .insert(teacherProfiles)
+              .values({ userId: newUser.id })
+              .onConflictDoNothing()
+          },
+        },
+      },
+    },
+  })
+
+  _cachedDbUrl = env.DATABASE_URL
+  return _auth
 }

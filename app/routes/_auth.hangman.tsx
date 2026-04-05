@@ -21,7 +21,7 @@ export const Route = createFileRoute('/_auth/hangman')({
 
 function HangmanPage() {
   const { t } = useTranslation()
-  const { teacher } = useAuth()
+  const { user } = useAuth()
   const [connection, setConnection] = useState<ClassConnection | null>(null)
   const [games, setGames] = useState<HangmanGame[]>([])
   const [selectedGame, setSelectedGame] = useState<HangmanGame | null>(null)
@@ -29,7 +29,7 @@ function HangmanPage() {
   const [showPropose, setShowPropose] = useState(false)
   const [error, setError] = useState('')
 
-  const classId = teacher?.class?.id
+  const classId = user?.class?.id
 
   async function load(conn: ClassConnection) {
     const result = await listGamesFn({ data: { connectionId: conn.id } })

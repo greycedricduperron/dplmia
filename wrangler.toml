@@ -12,10 +12,17 @@ bucket_name = "dplmia-uploads"
 
 [vars]
 NODE_ENV = "production"
-# Secrets set via Cloudflare dashboard or wrangler CLI:
-# wrangler secret put DATABASE_URL
-# wrangler secret put JWT_SECRET
-# wrangler secret put R2_PUBLIC_URL
+# Secrets — set via: wrangler secret put <NAME>
+# DATABASE_URL
+# R2_PUBLIC_URL
+# BETTER_AUTH_SECRET      (openssl rand -base64 32)
+# BETTER_AUTH_BASE_URL    (https://dplmia.cedric-duperron.workers.dev)
+# GOOGLE_CLIENT_ID
+# GOOGLE_CLIENT_SECRET
+# MICROSOFT_CLIENT_ID
+# MICROSOFT_CLIENT_SECRET
+# SLACK_CLIENT_ID
+# SLACK_CLIENT_SECRET
 
 [observability.logs]
 enabled = true

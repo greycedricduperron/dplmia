@@ -1,44 +1,61 @@
 import React, { createContext, useContext, useEffect, useState } from 'react'
-import type { Teacher } from '../types'
-import { meFn, logoutFn } from '../functions/auth'
+import { meFn } from '../functions/user'
+import { authClient } from '../lib/auth-client'
 import i18n from '../i18n'
 
+export interface AuthUser {
+  id: string
+  name: string
+  email: string
+  language: string | null
+  country: string | null
+  onboardingComplete: boolean
+  class: {
+    id: string
+    name: string
+    country: string
+    language: string
+    userId: string
+    createdAt: string | Date
+  } | null
+}
+
 interface AuthContextValue {
-  teacher: Teacher | null
+  user: AuthUser | null
   loading: boolean
-  setTeacher: (t: Teacher | null) => void
+  setUser: (u: AuthUser | null) => void
   logout: () => Promise<void>
 }
 
 const AuthContext = createContext<AuthContextValue | null>(null)
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [teacher, setTeacherState] = useState<Teacher | null>(null)
+  const [user, setUserState] = useState<AuthUser | null>(null)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     meFn()
-      .then((t) => {
-        const me = t as Teacher
-        setTeacherState(me)
-        i18n.changeLanguage(me.language)
+      .then((u) => {
+        const me = u as AuthUser | null
+        setUserState(me)
+        if (me?.language) i18n.changeLanguage(me.language)
       })
       .catch(() => {})
       .finally(() => setLoading(false))
   }, [])
 
-  function setTeacher(t: Teacher | null) {
-    setTeacherState(t)
-    if (t) i18n.changeLanguage(t.language)
+  function setUser(u: AuthUser | null) {
+    setUserState(u)
+    if (u?.language) i18n.changeLanguage(u.language)
   }
 
   async function logout() {
-    await logoutFn()
-    setTeacherState(null)
+    await authClient.signOut()
+    setUserState(null)
   }
 
   return (
-    <AuthContext.Provider value={{ teacher, loading, setTeacher, logout }}>
+    <AuthContext.Provider value={{ user, loading, setUser, logout }}>
       {children}
     </AuthContext.Provider>
   )

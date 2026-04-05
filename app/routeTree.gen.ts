@@ -9,7 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as RegisterRouteImport } from './routes/register'
+import { Route as OnboardingRouteImport } from './routes/onboarding'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as AuthRouteImport } from './routes/_auth'
 import { Route as IndexRouteImport } from './routes/index'
@@ -22,9 +22,9 @@ import { Route as AuthAudioRouteImport } from './routes/_auth.audio'
 import { Route as ApiFeedUploadImageRouteImport } from './routes/api/feed.upload-image'
 import { Route as ApiFeedUploadAudioRouteImport } from './routes/api/feed.upload-audio'
 
-const RegisterRoute = RegisterRouteImport.update({
-  id: '/register',
-  path: '/register',
+const OnboardingRoute = OnboardingRouteImport.update({
+  id: '/onboarding',
+  path: '/onboarding',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LoginRoute = LoginRouteImport.update({
@@ -85,7 +85,7 @@ const ApiFeedUploadAudioRoute = ApiFeedUploadAudioRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
-  '/register': typeof RegisterRoute
+  '/onboarding': typeof OnboardingRoute
   '/audio': typeof AuthAudioRoute
   '/class': typeof AuthClassRoute
   '/connections': typeof AuthConnectionsRoute
@@ -98,7 +98,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
-  '/register': typeof RegisterRoute
+  '/onboarding': typeof OnboardingRoute
   '/audio': typeof AuthAudioRoute
   '/class': typeof AuthClassRoute
   '/connections': typeof AuthConnectionsRoute
@@ -113,7 +113,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_auth': typeof AuthRouteWithChildren
   '/login': typeof LoginRoute
-  '/register': typeof RegisterRoute
+  '/onboarding': typeof OnboardingRoute
   '/_auth/audio': typeof AuthAudioRoute
   '/_auth/class': typeof AuthClassRoute
   '/_auth/connections': typeof AuthConnectionsRoute
@@ -128,7 +128,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/login'
-    | '/register'
+    | '/onboarding'
     | '/audio'
     | '/class'
     | '/connections'
@@ -141,7 +141,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/login'
-    | '/register'
+    | '/onboarding'
     | '/audio'
     | '/class'
     | '/connections'
@@ -155,7 +155,7 @@ export interface FileRouteTypes {
     | '/'
     | '/_auth'
     | '/login'
-    | '/register'
+    | '/onboarding'
     | '/_auth/audio'
     | '/_auth/class'
     | '/_auth/connections'
@@ -170,18 +170,18 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthRoute: typeof AuthRouteWithChildren
   LoginRoute: typeof LoginRoute
-  RegisterRoute: typeof RegisterRoute
+  OnboardingRoute: typeof OnboardingRoute
   ApiFeedUploadAudioRoute: typeof ApiFeedUploadAudioRoute
   ApiFeedUploadImageRoute: typeof ApiFeedUploadImageRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/register': {
-      id: '/register'
-      path: '/register'
-      fullPath: '/register'
-      preLoaderRoute: typeof RegisterRouteImport
+    '/onboarding': {
+      id: '/onboarding'
+      path: '/onboarding'
+      fullPath: '/onboarding'
+      preLoaderRoute: typeof OnboardingRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/login': {
@@ -288,7 +288,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthRoute: AuthRouteWithChildren,
   LoginRoute: LoginRoute,
-  RegisterRoute: RegisterRoute,
+  OnboardingRoute: OnboardingRoute,
   ApiFeedUploadAudioRoute: ApiFeedUploadAudioRoute,
   ApiFeedUploadImageRoute: ApiFeedUploadImageRoute,
 }

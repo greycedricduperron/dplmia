@@ -1,8 +1,10 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { getEvent } from 'vinxi/http'
-import { verifyToken } from '../../server/auth'
-import { getCookie } from 'vinxi/http'
 import type { CloudflareEnv } from '../../server/env'
+import { getAuth } from '../../server/auth'
+import { getDb } from '../../server/db'
+import { eq } from 'drizzle-orm'
+import { classes } from '../../server/db/schema'
 
 const AUDIO_MIMES = ['audio/mpeg', 'audio/ogg', 'audio/wav', 'audio/mp4', 'audio/webm']
 const MAX_SIZE = 20 * 1024 * 1024 // 20MB
@@ -14,16 +16,16 @@ export const Route = createFileRoute('/api/feed/upload-audio')({
         const event = getEvent()
         const env = (event.context as { cloudflare: { env: CloudflareEnv } }).cloudflare.env
 
-        const token = getCookie('token')
-        if (!token) return new Response('Unauthorized', { status: 401 })
+        const auth = getAuth()
+        const session = await auth.api.getSession({ headers: request.headers })
+        if (!session?.user) return new Response('Unauthorized', { status: 401 })
 
-        let payload
-        try {
-          payload = await verifyToken(token, env.JWT_SECRET)
-        } catch {
-          return new Response('Unauthorized', { status: 401 })
-        }
-        if (!payload.classId) return new Response('No class assigned', { status: 400 })
+        const db = getDb(env.DATABASE_URL)
+        const cls = await db.query.classes.findFirst({
+          where: eq(classes.userId, session.user.id),
+          columns: { id: true },
+        })
+        if (!cls) return new Response('No class assigned', { status: 400 })
 
         const formData = await request.formData()
         const file = formData.get('file') as File | null

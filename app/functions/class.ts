@@ -2,8 +2,6 @@ import { createServerFn } from '@tanstack/react-start'
 import { eq, and } from 'drizzle-orm'
 import { getDb } from '../server/db'
 import { classes } from '../server/db/schema'
-import { signToken } from '../server/auth'
-import { setAuthCookie } from '../server/cookies'
 import { getCloudflareEnv } from '../server/env'
 import { requireAuth } from '../server/requireAuth'
 import { CreateClassSchema, UpdateClassSchema, SearchClassSchema } from '../validators'
@@ -11,37 +9,33 @@ import { CreateClassSchema, UpdateClassSchema, SearchClassSchema } from '../vali
 export const createClassFn = createServerFn({ method: 'POST' })
   .inputValidator((data: unknown) => CreateClassSchema.parse(data))
   .handler(async ({ data }) => {
-    const { teacherId } = await requireAuth()
+    const { userId } = await requireAuth()
     const env = getCloudflareEnv()
     const db = getDb(env.DATABASE_URL)
 
     const existing = await db.query.classes.findFirst({
-      where: eq(classes.teacherId, teacherId),
+      where: eq(classes.userId, userId),
     })
     if (existing) throw new Error('ALREADY_HAS_CLASS')
 
     const [cls] = await db
       .insert(classes)
-      .values({ ...data, teacherId })
+      .values({ ...data, userId })
       .returning()
-
-    // Re-issue token with classId
-    const token = await signToken({ teacherId, classId: cls.id }, env.JWT_SECRET)
-    setAuthCookie(token, env.NODE_ENV === 'production')
 
     return cls
   })
 
 export const getMyClassFn = createServerFn({ method: 'GET' }).handler(async () => {
-  const { teacherId } = await requireAuth()
+  const { userId } = await requireAuth()
   const env = getCloudflareEnv()
   const db = getDb(env.DATABASE_URL)
 
   const cls = await db.query.classes.findFirst({
-    where: eq(classes.teacherId, teacherId),
+    where: eq(classes.userId, userId),
     with: {
-      teacher: {
-        columns: { id: true, name: true, email: true, country: true, language: true, createdAt: true },
+      user: {
+        columns: { id: true, name: true, email: true, createdAt: true },
       },
     },
   })
@@ -52,11 +46,11 @@ export const getMyClassFn = createServerFn({ method: 'GET' }).handler(async () =
 export const updateClassFn = createServerFn({ method: 'POST' })
   .inputValidator((data: unknown) => UpdateClassSchema.parse(data))
   .handler(async ({ data }) => {
-    const { teacherId } = await requireAuth()
+    const { userId } = await requireAuth()
     const env = getCloudflareEnv()
     const db = getDb(env.DATABASE_URL)
 
-    const cls = await db.query.classes.findFirst({ where: eq(classes.teacherId, teacherId) })
+    const cls = await db.query.classes.findFirst({ where: eq(classes.userId, userId) })
     if (!cls) throw new Error('NO_CLASS')
 
     const [updated] = await db
@@ -68,11 +62,11 @@ export const updateClassFn = createServerFn({ method: 'POST' })
   })
 
 export const deleteClassFn = createServerFn({ method: 'POST' }).handler(async () => {
-  const { teacherId } = await requireAuth()
+  const { userId } = await requireAuth()
   const env = getCloudflareEnv()
   const db = getDb(env.DATABASE_URL)
 
-  const cls = await db.query.classes.findFirst({ where: eq(classes.teacherId, teacherId) })
+  const cls = await db.query.classes.findFirst({ where: eq(classes.userId, userId) })
   if (!cls) throw new Error('NO_CLASS')
 
   await db.delete(classes).where(eq(classes.id, cls.id))

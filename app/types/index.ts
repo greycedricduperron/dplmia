@@ -6,9 +6,9 @@ export interface Teacher {
   id: string
   name: string
   email: string
-  language: string
-  country: string
-  createdAt: string | Date
+  language: string | null
+  country: string | null
+  onboardingComplete: boolean
   class: Class | null
 }
 
@@ -17,7 +17,7 @@ export interface Class {
   name: string
   country: string
   language: string
-  teacherId: string
+  userId: string
   createdAt: string | Date
 }
 

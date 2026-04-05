@@ -5,7 +5,7 @@ import LanguageSwitcher from './LanguageSwitcher'
 
 export default function Navbar() {
   const { t } = useTranslation()
-  const { teacher, logout } = useAuth()
+  const { user, logout } = useAuth()
   const router = useRouter()
 
   async function handleLogout() {
@@ -16,7 +16,7 @@ export default function Navbar() {
   return (
     <nav className="navbar">
       <div className="navbar-brand">🌍 {t('app.name')}</div>
-      {teacher && (
+      {user && (
         <div className="navbar-links">
           <Link to="/feed">{t('nav.feed')}</Link>
           <Link to="/gallery">{t('nav.gallery')}</Link>
@@ -28,7 +28,7 @@ export default function Navbar() {
       )}
       <div className="navbar-right">
         <LanguageSwitcher />
-        {teacher && (
+        {user && (
           <button className="btn-ghost" onClick={handleLogout}>
             {t('nav.logout')}
           </button>

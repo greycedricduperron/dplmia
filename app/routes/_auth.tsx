@@ -3,15 +3,11 @@ import Navbar from '../components/common/Navbar'
 import { useAuth } from '../context/AuthContext'
 
 export const Route = createFileRoute('/_auth')({
-  beforeLoad: () => {
-    // Client-side auth guard: redirect to /login if no cookie
-    // The AuthContext handles the actual session loading
-  },
   component: AuthLayout,
 })
 
 function AuthLayout() {
-  const { teacher, loading } = useAuth()
+  const { user, loading } = useAuth()
 
   if (loading) {
     return (
@@ -21,8 +17,12 @@ function AuthLayout() {
     )
   }
 
-  if (!teacher) {
+  if (!user) {
     throw redirect({ to: '/login' })
+  }
+
+  if (!user.onboardingComplete) {
+    throw redirect({ to: '/onboarding' })
   }
 
   return (

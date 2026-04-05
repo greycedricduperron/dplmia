@@ -1,6 +1,19 @@
-# Copier ce fichier en .dev.vars et renseigner les valeurs
-# Ce fichier est utilisé par wrangler dev pour simuler les secrets Cloudflare
-
+# Copy this file to .dev.vars and fill in values
 DATABASE_URL=postgresql://user:password@host/dbname?sslmode=require
-JWT_SECRET=changez-moi-avec-au-moins-32-caracteres-aleatoires
-R2_PUBLIC_URL=https://votre-bucket.r2.dev
+R2_PUBLIC_URL=https://your-bucket.r2.dev
+
+# Better Auth
+BETTER_AUTH_SECRET=change-me-at-least-32-random-characters
+BETTER_AUTH_BASE_URL=http://localhost:5173
+
+# OAuth providers — create apps at:
+#   Google:    https://console.cloud.google.com  (OAuth 2.0 Client ID)
+#   Microsoft: https://portal.azure.com          (App registrations)
+#   Slack:     https://api.slack.com/apps
+# Redirect URI for each: <BETTER_AUTH_BASE_URL>/api/auth/callback/<provider>
+GOOGLE_CLIENT_ID=
+GOOGLE_CLIENT_SECRET=
+MICROSOFT_CLIENT_ID=
+MICROSOFT_CLIENT_SECRET=
+SLACK_CLIENT_ID=
+SLACK_CLIENT_SECRET=

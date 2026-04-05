@@ -21,7 +21,7 @@ export const Route = createFileRoute('/_auth/feed')({
 
 function FeedPage() {
   const { t } = useTranslation()
-  const { teacher } = useAuth()
+  const { user } = useAuth()
   const [posts, setPosts] = useState<Post[]>([])
   const [type, setType] = useState<PostType>('TEXT')
   const [form, setForm] = useState({ title: '', content: '' })
@@ -154,7 +154,7 @@ function FeedPage() {
                   {t('common.by')} <strong>{post.class.name}</strong>
                 </span>
               </div>
-              {post.class.id === teacher?.class?.id && (
+              {post.class.id === user?.class?.id && (
                 <button className="btn-danger btn-sm" onClick={() => deletePost(post.id)}>
                   {t('feed.deletePost')}
                 </button>
