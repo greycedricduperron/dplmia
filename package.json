@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite dev",
-    "build": "vite build",
+    "build": "vite build && node scripts/patch-wrangler.js",
     "deploy": "npm run build && wrangler deploy --config dist/client/wrangler.json",
     "start": "node .output/server/index.mjs",
     "db:generate": "drizzle-kit generate",
