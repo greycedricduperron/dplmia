@@ -9,6 +9,6 @@ bucket_name = "dplmia-uploads"
 [vars]
 NODE_ENV = "production"
 # Secrets set via Cloudflare dashboard or wrangler CLI:
-# wrangler pages secret put DATABASE_URL
-# wrangler pages secret put JWT_SECRET
-# wrangler pages secret put R2_PUBLIC_URL
+# wrangler secret put DATABASE_URL
+# wrangler secret put JWT_SECRET
+# wrangler secret put R2_PUBLIC_URL
