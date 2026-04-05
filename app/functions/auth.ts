@@ -45,10 +45,16 @@ export const loginFn = createServerFn({ method: 'POST' })
     const env = getCloudflareEnv()
     const db = getDb(env.DATABASE_URL)
 
-    const teacher = await db.query.teachers.findFirst({
-      where: eq(teachers.email, data.email),
-      with: { class: true },
-    })
+    let teacher
+    try {
+      teacher = await db.query.teachers.findFirst({
+        where: eq(teachers.email, data.email),
+        with: { class: true },
+      })
+    } catch (e: unknown) {
+      const cause = (e as { cause?: { message?: string } })?.cause
+      throw new Error(`DB_ERROR: ${(e as Error).message} | cause: ${cause?.message ?? 'none'}`)
+    }
     if (!teacher) throw new Error('INVALID_CREDENTIALS')
 
     const valid = await comparePassword(data.password, teacher.passwordHash)
