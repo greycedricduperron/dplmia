@@ -10,7 +10,7 @@ const handler = createStartHandler(defaultStreamHandler)
 // In dev mode, export the handler directly (no workerd, process.env is used).
 export default {
   async fetch(request: Request, env: CloudflareEnv, ctx: ExecutionContext) {
-    setCloudflareEnv(env)
+    if (env?.DATABASE_URL) setCloudflareEnv(env)
     return handler(request, env, ctx)
   },
 }
