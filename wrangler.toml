@@ -12,3 +12,7 @@ NODE_ENV = "production"
 # wrangler secret put DATABASE_URL
 # wrangler secret put JWT_SECRET
 # wrangler secret put R2_PUBLIC_URL
+
+[observability.logs]
+enabled = true
+invocation_logs = true
