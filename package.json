@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "vite dev",
     "build": "vite build",
-    "deploy": "npm run build && wrangler pages deploy dist/client --project-name=dplmia",
+    "deploy": "npm run build && wrangler deploy --config dist/client/wrangler.json",
     "start": "node .output/server/index.mjs",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
