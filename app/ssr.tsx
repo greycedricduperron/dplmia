@@ -2,11 +2,15 @@ import {
   createStartHandler,
   defaultStreamHandler,
 } from '@tanstack/react-start/server'
+import { setCloudflareEnv, type CloudflareEnv } from './server/env'
 
 // Cloudflare Worker entry point.
-// The env bindings (DATABASE_URL, JWT_SECRET, R2_BUCKET, R2_PUBLIC_URL) are
-// accessed per-request via getRequestContext() from cloudflare:workers —
-// no global singleton needed.
+// setCloudflareEnv stores the Worker bindings on globalThis so they are
+// accessible from all server functions via getCloudflareEnv(), regardless
+// of module boundaries or code-splitting in the bundle.
 export default {
-  fetch: createStartHandler(defaultStreamHandler),
+  async fetch(request: Request, env: CloudflareEnv, ctx: ExecutionContext) {
+    setCloudflareEnv(env)
+    return createStartHandler(defaultStreamHandler)(request, env, ctx)
+  },
 }

@@ -1,5 +1,3 @@
-import { getRequestContext } from 'cloudflare:workers'
-
 export interface CloudflareEnv {
   DATABASE_URL: string
   JWT_SECRET: string
@@ -9,14 +7,26 @@ export interface CloudflareEnv {
 }
 
 /**
- * Returns the Cloudflare environment bindings for the current request.
- *
- * In production (Cloudflare Workers), `getRequestContext()` provides the env
- * object injected by the Workers runtime — including secrets set via wrangler.
- *
- * In local dev, vite.config.ts aliases `cloudflare:workers` to a polyfill
- * that reads from process.env (populated from app/.dev.vars).
+ * Store the Cloudflare env on globalThis so it is visible across all modules
+ * in the same Worker isolate, regardless of code-splitting or module boundaries.
+ * Called once per request in ssr.tsx before the TanStack Start handler runs.
  */
+export function setCloudflareEnv(env: CloudflareEnv): void {
+  ;(globalThis as Record<string, unknown>)['__cfEnv'] = env
+}
+
 export function getCloudflareEnv(): CloudflareEnv {
-  return getRequestContext().env as CloudflareEnv
+  const stored = (globalThis as Record<string, unknown>)['__cfEnv'] as
+    | CloudflareEnv
+    | undefined
+  if (stored) return stored
+
+  // Local dev fallback: process.env is populated from app/.dev.vars via loadEnv
+  return {
+    DATABASE_URL: process.env['DATABASE_URL'] ?? '',
+    JWT_SECRET: process.env['JWT_SECRET'] ?? '',
+    R2_BUCKET: undefined as unknown as R2Bucket,
+    R2_PUBLIC_URL: process.env['R2_PUBLIC_URL'] ?? '',
+    NODE_ENV: process.env['NODE_ENV'] ?? 'development',
+  }
 }
