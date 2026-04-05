@@ -1,6 +1,5 @@
 import { defineConfig, loadEnv } from 'vite'
 import { tanstackStart } from '@tanstack/react-start/plugin/vite'
-import { cloudflare } from '@cloudflare/vite-plugin'
 import viteReact from '@vitejs/plugin-react'
 
 export default defineConfig(({ mode }) => {
@@ -9,13 +8,8 @@ export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '')
   Object.assign(process.env, env)
 
-  const isProduction = mode === 'production'
-
   return {
     plugins: [
-      // Cloudflare plugin requires workerd which doesn't run on Windows.
-      // Only load it for production builds.
-      isProduction && cloudflare({ viteEnvironment: { name: 'ssr' } }),
       tanstackStart({ srcDirectory: 'app' }),
       viteReact(),
     ],
