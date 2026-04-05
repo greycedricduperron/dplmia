@@ -19,7 +19,7 @@ export function setCloudflareEnv(env: CloudflareEnv): void {
   ;(globalThis as Record<string, unknown>)['__cfEnv'] = {
     DATABASE_URL: env.DATABASE_URL,
     BETTER_AUTH_API_KEY: env.BETTER_AUTH_API_KEY,
-    BETTER_AUTH_BASE_URL: env.BETTER_AUTH_BASE_URL,
+    BETTER_AUTH_BASE_URL: env.BETTER_AUTH_BASE_URL ?? 'https://dplmia.cedric-duperron.workers.dev',
     GOOGLE_CLIENT_ID: env.GOOGLE_CLIENT_ID,
     GOOGLE_CLIENT_SECRET: env.GOOGLE_CLIENT_SECRET,
     MICROSOFT_CLIENT_ID: env.MICROSOFT_CLIENT_ID,

@@ -11,6 +11,12 @@ import { setCloudflareEnv, type CloudflareEnv } from './server/env'
 export default {
   async fetch(request: Request, env: CloudflareEnv, ctx: ExecutionContext) {
     if (env?.DATABASE_URL) setCloudflareEnv(env)
-    return createStartHandler(defaultStreamHandler)(request, env, ctx)
+    try {
+      return await createStartHandler(defaultStreamHandler)(request, env, ctx)
+    } catch (err) {
+      const msg = err instanceof Error ? err.stack ?? err.message : String(err)
+      console.error('[SSR ERROR]', msg)
+      return new Response(`Internal Server Error\n\n${msg}`, { status: 500 })
+    }
   },
 }
