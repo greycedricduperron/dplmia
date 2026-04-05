@@ -36,5 +36,11 @@ export default defineConfig(({ mode }) => {
             ),
           },
     },
+    // Tell Rollup to keep `cloudflare:workers` as an external import in the
+    // SSR/Worker bundle. The module is a built-in of the Cloudflare Workers
+    // runtime and must not be bundled — it is resolved at runtime by workerd.
+    ssr: {
+      external: ['cloudflare:workers'],
+    },
   }
 })
