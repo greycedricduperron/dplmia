@@ -24,19 +24,26 @@ export function getAuth() {
     baseURL: env.BETTER_AUTH_BASE_URL,
     basePath: '/api/auth',
     socialProviders: {
-      google: {
-        clientId: env.GOOGLE_CLIENT_ID,
-        clientSecret: env.GOOGLE_CLIENT_SECRET,
-      },
-      microsoft: {
-        clientId: env.MICROSOFT_CLIENT_ID,
-        clientSecret: env.MICROSOFT_CLIENT_SECRET,
-        tenantId: 'common',
-      },
-      slack: {
-        clientId: env.SLACK_CLIENT_ID,
-        clientSecret: env.SLACK_CLIENT_SECRET,
-      },
+      // Only register a provider if its credentials are configured
+      ...(env.GOOGLE_CLIENT_ID && {
+        google: {
+          clientId: env.GOOGLE_CLIENT_ID,
+          clientSecret: env.GOOGLE_CLIENT_SECRET,
+        },
+      }),
+      ...(env.MICROSOFT_CLIENT_ID && {
+        microsoft: {
+          clientId: env.MICROSOFT_CLIENT_ID,
+          clientSecret: env.MICROSOFT_CLIENT_SECRET,
+          tenantId: 'common' as const,
+        },
+      }),
+      ...(env.SLACK_CLIENT_ID && {
+        slack: {
+          clientId: env.SLACK_CLIENT_ID,
+          clientSecret: env.SLACK_CLIENT_SECRET,
+        },
+      }),
     },
     databaseHooks: {
       user: {
