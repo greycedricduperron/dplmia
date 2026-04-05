@@ -61,24 +61,31 @@ body {
 /* Auth */
 .auth-page {
   min-height: 100vh; display: flex; align-items: center;
-  justify-content: center; background: linear-gradient(135deg, #dbeafe 0%, #ede9fe 100%);
+  justify-content: center; padding: 24px 16px;
+  background: linear-gradient(150deg, #dbeafe 0%, #ede9fe 60%, #fce7f3 100%);
 }
 .auth-card {
-  background: white; border-radius: 16px; padding: 40px;
-  box-shadow: 0 8px 32px rgba(0,0,0,.12); width: 100%; max-width: 420px;
+  background: white; border-radius: 20px; padding: 40px;
+  box-shadow: 0 8px 40px rgba(59,130,246,.15); width: 100%; max-width: 420px;
 }
-.auth-card h1 { text-align: center; margin-bottom: 4px; font-size: 1.6rem; color: var(--primary); }
-.auth-card h2 { text-align: center; margin-bottom: 24px; color: var(--muted); font-weight: 500; }
-.auth-card form { display: flex; flex-direction: column; gap: 16px; }
-.auth-card p { text-align: center; margin-top: 16px; color: var(--muted); font-size: 0.9rem; }
-.auth-card a { color: var(--primary); }
+.auth-card h1 { text-align: center; margin-bottom: 4px; font-size: 1.8rem; color: var(--primary); }
+.auth-card h2 { text-align: center; margin-bottom: 28px; color: var(--muted); font-weight: 400; font-size: 1rem; }
+.auth-card form { display: flex; flex-direction: column; gap: 18px; }
+.auth-card p { text-align: center; margin-top: 20px; color: var(--muted); font-size: 0.9rem; }
+.auth-card a { color: var(--primary); font-weight: 500; }
+.auth-card .btn-primary { width: 100%; padding: 14px; font-size: 1rem; border-radius: 10px; margin-top: 4px; }
+
+@media (max-width: 480px) {
+  .auth-card { padding: 28px 20px; border-radius: 16px; }
+  .auth-card h1 { font-size: 1.5rem; }
+}
 
 /* Forms */
 label { display: flex; flex-direction: column; gap: 4px; font-size: 0.9rem; font-weight: 500; }
 input, select, textarea {
-  padding: 10px 12px; border: 1px solid var(--border); border-radius: 8px;
-  font-size: 0.95rem; font-family: inherit; transition: border-color .15s;
-  background: var(--surface); color: var(--text);
+  padding: 12px 14px; border: 1px solid var(--border); border-radius: 8px;
+  font-size: 1rem; font-family: inherit; transition: border-color .15s;
+  background: var(--surface); color: var(--text); width: 100%;
 }
 input:focus, select:focus, textarea:focus { outline: none; border-color: var(--primary); }
 textarea { resize: vertical; }
