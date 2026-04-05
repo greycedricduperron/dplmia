@@ -4,6 +4,6 @@ import * as schema from './schema'
 
 // No module-level singleton: DATABASE_URL comes from Cloudflare env context per-request
 export function getDb(databaseUrl: string) {
-  const sql = neon(databaseUrl)
+  const sql = neon(databaseUrl.trim())
   return drizzle(sql, { schema })
 }
